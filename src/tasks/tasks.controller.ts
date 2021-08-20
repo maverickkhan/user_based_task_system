@@ -27,13 +27,13 @@ export class TasksController {
         return this.taskService.createTasks(CreateTaskDto);
     }
 
-    // @Delete('/:id')
-    // deleteTask(@Param('id') id:string): void {
-    //     return this.taskService.deleteTask(id);
-    // }
+    @Delete('/:id')
+    deleteTask(@Param('id', ParseIntPipe) id:number): Promise<void> {
+        return this.taskService.deleteTask(id);
+    }
 
-    // @Patch('/:id')
-    // updateTask(@Param('id') id: string, @Body('status', TaskStatusValidationPipe) status: TasksStatus): Tasks {
-    //     return this.taskService.updateTask(id, status);
-    // }   
+    @Patch('/:id')
+    updateTask(@Param('id', ParseIntPipe) id: number, @Body('status', TaskStatusValidationPipe) status: TasksStatus): Promise<Task> {
+        return this.taskService.updateTask(id, status);
+    }   
 }
