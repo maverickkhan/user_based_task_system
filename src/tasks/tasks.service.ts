@@ -50,11 +50,11 @@ export class TasksService {
     //     return found;
     // }
 
-    async deleteTask(id: number): Promise<void>{
+    async deleteTask(id: number, user: User): Promise<void>{
         //return this.tasks.find(tasks => tasks.id === id)
         // const found = this.getTaskbyId(id);
         // await found.TaskRepository.remove(id);
-        const result = await this.TaskRepository.delete(id);
+        const result = await this.TaskRepository.delete({id, userId: user.id});
         console.log(result);
 
         if (result.affected === 0){
@@ -92,9 +92,10 @@ export class TasksService {
     //     return task;
     // }
 
-    // updateTask(id: string, status: TasksStatus){
-    //     const task = this.getTaskById(id);
-    //     task.status = status;
-    //     return task;
-    // }
+    async updateTask(id: number, status: TasksStatus, user: User){
+        // const task = this.getTaskById(id, user);
+        const task = await this.getTaskbyId(id, user);
+        task.status = status;
+        return task;
+    }
 }
