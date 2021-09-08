@@ -7,15 +7,19 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { jwtStrategy } from './jwt-strategy';
 import { UserRepository } from './user.repository';
+import * as config from 'config';
+require('dotenv').config()
 
+
+const jwtConfig = config.get('jwt')
 @Module({
   imports: [
     PassportModule.register({defaultStrategy: 'jwt'}),
     JwtModule.register(
       {
-        secret: 'topSecret51',
+        secret: process.env.JWT_SECRET || jwtConfig.secret,
         signOptions: {
-          expiresIn: 3600,
+          expiresIn: process.env.EXPIRES || jwtConfig.expiresIn,
         }
       }
       ),
